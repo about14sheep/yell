@@ -1,8 +1,15 @@
 import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
+import Pin from './components/pin'
 
 function App() {
   return (
-    <h1>Hello world!</h1>
+    <BrowserRouter>
+      <Switch>
+        <Route path='/pins' component={Pin} />
+      </Switch>
+    </BrowserRouter>
   );
 }
 
