@@ -4,9 +4,9 @@ import { Redirect } from 'react-router-dom';
 import { login } from '../actions/authentication';
 
 const LoginPanel = () => {
-    const [email, setEmail] = useState('demo@example.com');
+    const [email, setEmail] = useState('a@a.com');
     const [password, setPassword] = useState('password');
-    const token = useSelector(state => state.authentication.token);
+    const token = useSelector(state => state.auth.token);
     const dispatch = useDispatch();
 
     const handleSubmit = (e) => {
@@ -23,7 +23,7 @@ const LoginPanel = () => {
 
     return (
         <main>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <input type='text' placeholder={email} value={email} onChange={updateEmail} />
                 <input type='password' placeholder={password} value={password} onChange={updatePassword} />
                 <button type="submit">Login</button>

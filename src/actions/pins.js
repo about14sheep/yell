@@ -11,8 +11,6 @@ const setCurrent = current => ({
     current,
 })
 
-
-
 export const getPins = () => async (dispatch) => {
     const res = await fetch(`http://localhost:8080/pins`)
     if (res.ok) {

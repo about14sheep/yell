@@ -15,6 +15,7 @@ const pinReducer = (state = {}, action) => {
                 current: action.current,
             }
         }
+
         default: return state;
     }
 }
