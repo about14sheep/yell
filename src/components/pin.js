@@ -2,15 +2,14 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
-
 import { getPins } from '../actions/pins';
 
 const Pin = () => {
     const dispatch = useDispatch()
-    const pins = useSelector(state => state.list)
+    const pins = useSelector(state => state.pin.list)
 
     useEffect(() => {
-        dispatch(getPins(1));
+        dispatch(getPins());
     }, [dispatch])
 
     if (!pins) {

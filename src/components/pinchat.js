@@ -1,30 +1,28 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux'
-import { getPinChat } from '../actions/pins';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 const PinChat = () => {
     const webSocket = useRef(null);
-    const dispatch = useDispatch();
-    const { id } = useParams();
-    const [newMessageTime, setNewMessageTime] = useState(0)
-    const pin = useSelector(state => state.current)
+    const [inputValue, setInputValue] = useState('')
+    const { id } = useParams()
+    const ws = new WebSocket(`ws://localhost:8080/pins/${id}`);
 
-    useEffect(() => {
-        dispatch(getPinChat(id))
-    }, [dispatch, id]);
 
-    useEffect(() => {
-        const ws = new WebSocket(`ws://localhost:8080/pins/:id`);
-
-        ws.onopen = () => {
-            const message = {
-                type: 'message',
-                data: {
-                    message: 'yehaw'
-                }
+    const handleClick = (e) => {
+        const message = {
+            type: 'message',
+            data: {
+                message: inputValue
             }
-            ws.send(JSON.stringify(message))
+        }
+        ws.send(JSON.stringify(message))
+        setInputValue('')
+    }
+
+    useEffect(() => {
+
+        ws.onopen = (e) => {
+            console.log('socket open')
         };
 
         ws.onmessage = (e) => {
@@ -48,15 +46,12 @@ const PinChat = () => {
                 webSocket.current.ws.close();
             }
         };
-    }, [newMessageTime]);
-
-    if (!pin) {
-        return null;
-    }
+    }, [webSocket]);
 
     return (
         <div>
-            <button onClick={() => setNewMessageTime(newMessageTime + 1)}>
+            <input value={inputValue} onChange={(e) => setInputValue(e.target.value)}></input>
+            <button onClick={handleClick}>
                 chat
             </button>
         </div>
