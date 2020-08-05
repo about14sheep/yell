@@ -34,6 +34,20 @@ export const login = (email, password) => async dispatch => {
     }
 }
 
+export const signup = (email, password, username) => async dispatch => {
+    const res = await fetch(`${baseUrl}/users`, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, username })
+    })
+
+    if (res.ok) {
+        const { token } = await res.json();
+        window.localStorage.setItem(TOKEN_KEY, token);
+        dispatch(setToken(token))
+    }
+}
+
 export const logout = () => async (dispatch, getState) => {
     const { auth: { token } } = getState()
     const res = await fetch(`${baseUrl}/session`, {
