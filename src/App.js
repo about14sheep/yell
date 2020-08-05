@@ -5,7 +5,7 @@ import Pin from './components/Pin'
 import PinChat from './components/PinChat';
 import LoginPanel from './components/LoginPanel';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadToken } from './actions/authentication';
+import { loadToken, loadUserId } from './actions/authentication';
 import SignUp from './components/SignUp';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -22,6 +22,7 @@ const App = () => {
   useEffect(() => {
     setLoaded(true);
     dispatch(loadToken())
+    dispatch(loadUserId())
   }, [dispatch])
 
   if (!loaded) {
