@@ -35,7 +35,7 @@ export const login = (email, password) => async dispatch => {
 }
 
 export const logout = () => async (dispatch, getState) => {
-    const { authentication: { token } } = getState()
+    const { auth: { token } } = getState()
     const res = await fetch(`${baseUrl}/session`, {
         method: 'delete',
         headers: { Authorization: `Bearer ${token}` }

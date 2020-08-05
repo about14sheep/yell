@@ -6,6 +6,7 @@ import PinChat from './components/PinChat';
 import LoginPanel from './components/LoginPanel';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadToken } from './actions/authentication';
+import SignUp from './components/SignUp';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
@@ -30,7 +31,8 @@ const App = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path='/login' component={LoginPanel} />
+        <Route path='/login' exact={true} component={LoginPanel} />
+        <Route path='/signup' exact={true} component={SignUp} />
         <PrivateRoute path='/pins' exact={true} needLogin={needLogin} component={Pin} />
         <PrivateRoute path='/pins/:id' exact={true} needLogin={needLogin} component={PinChat} />
       </Switch>
