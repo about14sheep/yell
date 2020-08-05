@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import Pin from './components/pin'
-import PinChat from './components/pinchat';
+import Pin from './components/Pin'
+import PinChat from './components/PinChat';
 import LoginPanel from './components/LoginPanel';
 
 function App() {
