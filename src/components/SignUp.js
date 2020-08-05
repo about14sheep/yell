@@ -21,7 +21,7 @@ const SignUp = () => {
     }
 
     if (token) {
-        return <Redirect to='/' />
+        return <Redirect to='/pins' />
     }
 
     return (

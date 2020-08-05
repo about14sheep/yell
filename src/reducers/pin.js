@@ -1,4 +1,5 @@
 import { LOAD, SET_CURRENT } from '../actions/pins';
+import { LOAD_MESSAGES } from '../actions/messages';
 
 const pinReducer = (state = {}, action) => {
     switch (action.type) {
@@ -13,6 +14,13 @@ const pinReducer = (state = {}, action) => {
             return {
                 ...state,
                 current: action.current,
+            }
+        }
+
+        case LOAD_MESSAGES: {
+            return {
+                ...state,
+                msgList: action.msgList,
             }
         }
 
