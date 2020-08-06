@@ -1,4 +1,5 @@
 import { baseUrl } from '../config';
+import { getGeoLoc } from './pins';
 
 const TOKEN_KEY = 'yell/authentication/token'
 export const SET_TOKEN = 'SET_TOKEN';

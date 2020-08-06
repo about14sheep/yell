@@ -17,6 +17,7 @@ const PinChat = () => {
     const sendMsg = e => {
         e.preventDefault()
         dispatch(postMessage(id, userId, inputValue))
+        setInputValue('')
     }
 
     useEffect(() => {

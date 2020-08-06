@@ -1,4 +1,4 @@
-import { LOAD, SET_CURRENT } from '../actions/pins';
+import { LOAD, SET_CURRENT, SET_GEOLOC } from '../actions/pins';
 import { LOAD_MESSAGES } from '../actions/messages';
 
 const pinReducer = (state = {}, action) => {
@@ -14,6 +14,13 @@ const pinReducer = (state = {}, action) => {
             return {
                 ...state,
                 current: action.current,
+            }
+        }
+
+        case SET_GEOLOC: {
+            return {
+                ...state,
+                geoLoc: action.geoLoc,
             }
         }
 

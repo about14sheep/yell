@@ -7,6 +7,8 @@ import LoginPanel from './components/LoginPanel';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadToken, loadUserId } from './actions/authentication';
 import SignUp from './components/SignUp';
+import PinForm from './components/PinForm';
+import { getGeoLoc } from './actions/pins';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
@@ -23,6 +25,7 @@ const App = () => {
     setLoaded(true);
     dispatch(loadToken())
     dispatch(loadUserId())
+    dispatch(getGeoLoc())
   }, [dispatch])
 
   if (!loaded) {
@@ -34,6 +37,7 @@ const App = () => {
       <Switch>
         <Route path='/login' exact={true} component={LoginPanel} />
         <Route path='/signup' exact={true} component={SignUp} />
+        <Route path='/newpin' exact={true} component={PinForm} />
         <PrivateRoute path='/pins' exact={true} needLogin={needLogin} component={Pin} />
         <PrivateRoute path='/pins/:id' exact={true} needLogin={needLogin} component={PinChat} />
       </Switch>
