@@ -19,8 +19,8 @@ const setCurrent = current => ({
     current,
 })
 
-export const getPins = () => async (dispatch) => {
-    const res = await fetch(`${baseUrl}/pins`)
+export const getPins = (geoLoc) => async (dispatch) => {
+    const res = await fetch(`${baseUrl}/pins/?lat=${geoLoc.lat}&lng=${geoLoc.lng}`)
     if (res.ok) {
         const list = await res.json();
         dispatch(load(list))
@@ -32,14 +32,13 @@ export const getGeoLoc = () => async (dispatch) => {
         console.log('cant get location')
     }
     navigator.geolocation.getCurrentPosition((position) => {
-        return formatCoords(dispatch, position.coords.latitude, position.coords.longitude)
+        return formatCoords(dispatch, { lat: position.coords.latitude, lng: position.coords.longitude })
     })
 
 }
-const formatCoords = (dispatch, latitude, longitude) => dispatch(setGeoLoc(`ST_MakePoint(${latitude}, ${longitude})`))
+const formatCoords = (dispatch, geoLoc) => dispatch(setGeoLoc(geoLoc))
 
 export const postPin = (title, geoLoc, ownerId) => async _ => {
-    console.log(title, geoLoc, ownerId)
     const res = await fetch(`${baseUrl}/pins`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
@@ -49,8 +48,6 @@ export const postPin = (title, geoLoc, ownerId) => async _ => {
         console.log('ok')
     }
 }
-
-
 
 export const getPinChat = id => async (dispatch, getState) => {
     const res = await fetch(`${baseUrl}/pins/${id}`)
