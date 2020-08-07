@@ -30,17 +30,18 @@ export const getPins = (geoLoc) => async (dispatch) => {
 export const getPinUsers = (pinId) => async dispatch => {
     const res = await fetch(`${baseUrl}/userpins/pins/${pinId}`)
     if (res.ok) {
-        const users = await res.json();
+        await res.json();
     }
 }
 
 export const getGeoLoc = () => async (dispatch) => {
-    if (!'geolocation' in navigator) {
-        console.log('cant get location')
+    if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            return formatCoords(dispatch, { lat: position.coords.latitude, lng: position.coords.longitude })
+        })
+    } else {
+        console.log('Gotta give the position for this work homie')
     }
-    navigator.geolocation.getCurrentPosition((position) => {
-        return formatCoords(dispatch, { lat: position.coords.latitude, lng: position.coords.longitude })
-    })
 
 }
 const formatCoords = (dispatch, geoLoc) => dispatch(setGeoLoc(geoLoc))

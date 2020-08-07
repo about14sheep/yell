@@ -1,30 +1,29 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { getPinMessages, postMessage } from '../actions/messages';
 import Message from './Message'
+import { addMessage } from '../actions/messages';
 
 const PinChat = () => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
     const [inputValue, setInputValue] = useState('')
+    const messages = useSelector(state => state.msg)
     const { id } = useParams()
-    const userId = useSelector(state => state.auth.id)
-    const msgList = useSelector(state => state.pin.msgList)
-
+    const username = useSelector(state => state.auth.username)
+    let count = 0;
     const updateInput = e => setInputValue(e.target.value)
 
     const webSocket = useRef(null);
     const ws = new WebSocket(`ws://localhost:8080/pins/`);
-
 
     const handleClick = (e) => {
         e.preventDefault()
         const message = {
             type: 'chatMessage',
             data: {
-                message: inputValue,
-                userId: userId,
+                messageText: inputValue,
+                username: username,
                 pinId: id,
             }
         }
@@ -35,34 +34,22 @@ const PinChat = () => {
     useEffect(() => {
 
         ws.onopen = (e) => {
-            console.log('socket open')
             const msg = {
                 type: 'SEND_USERS',
                 data: {
                     pinId: id,
-                    userId: userId
                 }
             }
             ws.send(JSON.stringify(msg))
         };
 
         ws.onmessage = (e) => {
-            console.log(JSON.parse(e.data).data.message);
+            const message = JSON.parse(e.data).data
+            dispatch(addMessage(message))
         };
 
         ws.onerror = (e) => {
             console.error(e);
-        };
-
-        ws.onclose = (e) => {
-            const message = {
-                type: 'close',
-                data: {
-                    userId: userId,
-                    pinId: id
-                }
-            }
-            ws.send(JSON.stringify(message))
         };
 
         webSocket.current = {
@@ -76,19 +63,9 @@ const PinChat = () => {
         };
     }, [webSocket]);
 
-    const sendMsg = e => {
-        e.preventDefault()
-        dispatch(postMessage(id, userId, inputValue))
-        setInputValue('')
-    }
-
-    useEffect(() => {
-        dispatch(getPinMessages(id))
-    }, [dispatch, id])
-
     return (
         <div>
-            {!msgList ? null : msgList.map(msg => <Message key={msg.id} username={msg.User.username} text={msg.messageText} />)}
+            {!messages ? null : messages.map(msg => msg.pinId === id ? <Message username={msg.username} key={count++} text={msg.messageText} /> : null)}
             <form onSubmit={handleClick}>
                 <input type="text" placeholder={'yell'} value={inputValue} onChange={updateInput}></input>
                 <button type="submit">Send</button>

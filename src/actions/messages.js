@@ -1,19 +1,30 @@
 import { baseUrl } from "../config";
 
-export const LOAD_MESSAGES = 'LOAD_MESSAGES';
+export const LOAD_USERS = 'LOAD_USERS';
+export const UPDATE_MESSAGES = 'UPDATE_MESSAGES';
 
-const loadMessages = msgList => ({
-    type: LOAD_MESSAGES,
-    msgList
+export const loadUsers = userList => ({
+    type: LOAD_USERS,
+    userList
 });
 
 export const getPinMessages = id => async (dispatch) => {
     const res = await fetch(`${baseUrl}/messages/pins/${id}`)
     if (res.ok) {
-        const msgList = await res.json();
-        dispatch(loadMessages(msgList));
+        const list = await res.json();
+        const userList = [...new Set(list.map(msg => msg.User.username))]
+        await dispatch(loadUsers({
+            pinId: id,
+            users: userList
+        }))
     }
 }
+
+export const addMessage = (msg) => ({
+    type: UPDATE_MESSAGES,
+    msg
+})
+
 
 export const postMessage = (pinId, userId, messageText) => async dispatch => {
     try {

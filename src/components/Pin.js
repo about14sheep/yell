@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import LogoutButton from './LogoutButton'
 import MapContainer from './Map'
 import { getPins } from '../actions/pins';
+import { getPinMessages } from '../actions/messages';
 
 const Pin = () => {
     const dispatch = useDispatch()
@@ -12,8 +13,13 @@ const Pin = () => {
     const geoLoc = useSelector(state => state.pin.geoLoc)
 
     useEffect(() => {
+        if (pins) pins.forEach(pin => dispatch(getPinMessages(pin.id)))
+    }, [dispatch, pins])
+
+    useEffect(() => {
         if (!geoLoc) return
         dispatch(getPins(geoLoc));
+
     }, [dispatch, geoLoc])
 
     return (

@@ -1,5 +1,5 @@
 import { LOAD, SET_CURRENT, SET_GEOLOC } from '../actions/pins';
-import { LOAD_MESSAGES } from '../actions/messages';
+
 
 const pinReducer = (state = {}, action) => {
     switch (action.type) {
@@ -21,13 +21,6 @@ const pinReducer = (state = {}, action) => {
             return {
                 ...state,
                 geoLoc: action.geoLoc,
-            }
-        }
-
-        case LOAD_MESSAGES: {
-            return {
-                ...state,
-                msgList: action.msgList,
             }
         }
 
