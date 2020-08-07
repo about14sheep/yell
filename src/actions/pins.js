@@ -27,6 +27,13 @@ export const getPins = (geoLoc) => async (dispatch) => {
     }
 }
 
+export const getPinUsers = (pinId) => async dispatch => {
+    const res = await fetch(`${baseUrl}/userpins/pins/${pinId}`)
+    if (res.ok) {
+        const users = await res.json();
+    }
+}
+
 export const getGeoLoc = () => async (dispatch) => {
     if (!'geolocation' in navigator) {
         console.log('cant get location')
