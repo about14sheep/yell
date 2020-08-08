@@ -8,6 +8,11 @@ export const loadUsers = userList => ({
     userList
 });
 
+export const addMessage = (msg) => ({
+    type: UPDATE_MESSAGES,
+    msg
+})
+
 export const getPinMessages = id => async (dispatch) => {
     const res = await fetch(`${baseUrl}/messages/pins/${id}`)
     if (res.ok) {
@@ -19,12 +24,6 @@ export const getPinMessages = id => async (dispatch) => {
         }))
     }
 }
-
-export const addMessage = (msg) => ({
-    type: UPDATE_MESSAGES,
-    msg
-})
-
 
 export const postMessage = (pinId, userId, messageText) => async dispatch => {
     try {

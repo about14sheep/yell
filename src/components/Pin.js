@@ -14,7 +14,7 @@ const Pin = () => {
 
     useEffect(() => {
         if (pins) pins.forEach(pin => dispatch(getPinMessages(pin.id)))
-    }, [dispatch, pins])
+    }, [pins])
 
     useEffect(() => {
         if (!geoLoc) return
