@@ -38,7 +38,7 @@ const App = () => {
       <Switch>
         <Route path='/login' exact={true} component={LoginPanel} />
         <Route path='/signup' exact={true} component={SignUp} />
-        <Route path='/newpin' exact={true} component={PinForm} />
+        <PrivateRoute path='/newpin' exact={true} component={Pin} needLogin={needLogin} />
         <PrivateRoute path='/pins' exact={true} needLogin={needLogin} component={Pin} />
         <PrivateRoute path='/pins/:id' exact={true} needLogin={needLogin} component={Pin} />
       </Switch>

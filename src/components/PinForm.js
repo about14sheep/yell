@@ -1,20 +1,33 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { postPin } from '../actions/pins';
-import { Redirect } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
+import PinChat from './PinChat';
 
 const PinForm = () => {
     const dispatch = useDispatch();
     const [inputValue, setInputValue] = useState('');
     const userId = useSelector(state => state.auth.id);
     const geoLoc = useSelector(state => state.pin.geoLoc);
+    const currentPin = useSelector(state => state.pin.current)
 
     const updateValue = e => setInputValue(e.target.value)
+
+    const goToCurrentPin = _ => (
+        <div>
+            <p>There is already a pin for your location!</p>
+            <Link to={{ pathname: `/pins/${currentPin.id}`, title: `${currentPin.title}` }} >Take me there!</Link>
+            <Route path='/pins/:id' render={props => <PinChat {...props} />} />
+        </div>
+    )
 
     const dropPin = e => {
         e.preventDefault();
         dispatch(postPin(inputValue, geoLoc, userId))
-        return < Redirect to="/pins" />
+    }
+
+    if (currentPin) {
+        return goToCurrentPin()
     }
 
     return (

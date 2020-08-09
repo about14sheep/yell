@@ -27,6 +27,14 @@ export const getPins = (geoLoc) => async (dispatch) => {
     }
 }
 
+export const setCurrentPin = geoLoc => async dispatch => {
+    const res = await fetch(`${baseUrl}/pins/check/?lat=${geoLoc.lat}&lng=${geoLoc.lng}`)
+    if (res.ok) {
+        const pin = await res.json();
+        dispatch(setCurrent(pin))
+    }
+}
+
 export const getPinUsers = (pinId) => async dispatch => {
     const res = await fetch(`${baseUrl}/userpins/pins/${pinId}`)
     if (res.ok) {
