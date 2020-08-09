@@ -15,7 +15,7 @@ const PinForm = () => {
 
     const goToCurrentPin = _ => (
         <div>
-            <p>There is already a pin for your location!</p>
+            <p>There is already a chat at your location!</p>
             <Link to={{ pathname: `/pins/${currentPin.id}`, title: `${currentPin.title}` }} >Take me there!</Link>
             <Route path='/pins/:id' render={props => <PinChat {...props} />} />
         </div>

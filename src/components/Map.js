@@ -1,18 +1,20 @@
 import React from 'react';
+import { baseUrl } from '../config'
 
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
 import L from 'leaflet'
 import { useSelector } from 'react-redux';
+import iconImage from '../yell_icon.png'
 
 const MapContainer = props => {
     const users = useSelector(state => state.msg)
     const pins = props.pins
     const icon = new L.Icon({
-        iconUrl: '../../public/images/yell_icon.png',
-        iconRetinaUrl: '../../public/images/yell_icon.png',
+        iconUrl: iconImage,
+        iconRetinaUrl: iconImage,
         iconAnchor: [5, 55],
         popupAnchor: [10, -44],
-        iconSize: [25, 55],
+        iconSize: [55, 55],
         shadowSize: [68, 95],
         shadowAnchor: [20, 92],
     })
@@ -24,7 +26,7 @@ const MapContainer = props => {
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             />
             {pins.map(pin => (
-                <Marker key={pin.id} position={pin.geoLoc.coordinates}>
+                <Marker key={pin.id} icon={icon} position={pin.geoLoc.coordinates}>
                     <Popup>
                         <h1>{pin.title}</h1>
                         {users.filter(user => user.pinId === pin.id).map(inst => inst.users.map(el => <p key={el}>{el}</p>))}

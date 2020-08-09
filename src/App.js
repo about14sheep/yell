@@ -7,7 +7,6 @@ import LoginPanel from './components/LoginPanel';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadToken, loadUserId, loadUsername } from './actions/authentication';
 import SignUp from './components/SignUp';
-import PinForm from './components/PinForm';
 import { getGeoLoc } from './actions/pins';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (

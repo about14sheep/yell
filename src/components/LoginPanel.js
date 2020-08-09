@@ -12,6 +12,7 @@ const LoginPanel = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(login(email, password));
+
     }
 
     const updateEmail = e => setEmail(e.target.value);
