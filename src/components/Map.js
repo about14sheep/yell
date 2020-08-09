@@ -4,7 +4,7 @@ import { baseUrl } from '../config'
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
 import L from 'leaflet'
 import { useSelector } from 'react-redux';
-import iconImage from '../yell_icon.png'
+import iconImage from '../chat_icon.png'
 
 const MapContainer = props => {
     const users = useSelector(state => state.msg)
