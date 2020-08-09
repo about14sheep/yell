@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { postPin } from '../actions/pins';
+import { Redirect } from 'react-router-dom';
 
 const PinForm = () => {
     const dispatch = useDispatch();
@@ -13,6 +14,7 @@ const PinForm = () => {
     const dropPin = e => {
         e.preventDefault();
         dispatch(postPin(inputValue, geoLoc, userId))
+        return < Redirect to="/pins" />
     }
 
     return (

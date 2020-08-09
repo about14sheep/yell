@@ -3,10 +3,9 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 
 import Pin from './components/Pin'
-import PinChat from './components/PinChat';
 import LoginPanel from './components/LoginPanel';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadToken, loadUserId } from './actions/authentication';
+import { loadToken, loadUserId, loadUsername } from './actions/authentication';
 import SignUp from './components/SignUp';
 import PinForm from './components/PinForm';
 import { getGeoLoc } from './actions/pins';
@@ -24,6 +23,7 @@ const App = () => {
 
   useEffect(() => {
     setLoaded(true);
+    dispatch(loadUsername())
     dispatch(loadToken())
     dispatch(loadUserId())
     dispatch(getGeoLoc())
@@ -40,7 +40,7 @@ const App = () => {
         <Route path='/signup' exact={true} component={SignUp} />
         <Route path='/newpin' exact={true} component={PinForm} />
         <PrivateRoute path='/pins' exact={true} needLogin={needLogin} component={Pin} />
-        <PrivateRoute path='/pins/:id' exact={true} needLogin={needLogin} component={PinChat} />
+        <PrivateRoute path='/pins/:id' exact={true} needLogin={needLogin} component={Pin} />
       </Switch>
     </BrowserRouter>
   );

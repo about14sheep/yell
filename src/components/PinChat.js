@@ -3,27 +3,29 @@ import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Message from './Message'
-import { addMessage } from '../actions/messages';
+import { addMessage, postMessage } from '../actions/messages';
 
-const PinChat = () => {
+const PinChat = (props) => {
     const dispatch = useDispatch()
     const [inputValue, setInputValue] = useState('')
     const messages = useSelector(state => state.msg)
     const { id } = useParams()
+    const userId = useSelector(state => state.auth.id)
     const username = useSelector(state => state.auth.username)
-    let count = 0;
     const updateInput = e => setInputValue(e.target.value)
 
     const webSocket = useRef(null);
-    const ws = new WebSocket(`ws://localhost:8080/pins/`);
+    const ws = new WebSocket(`ws://localhost:8080/pins/${id}`);
 
-    const handleClick = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault()
+        dispatch(postMessage(id, userId, inputValue))
         const message = {
             type: 'chatMessage',
             data: {
                 messageText: inputValue,
                 username: username,
+                userId: userId,
                 pinId: id,
             }
         }
@@ -34,6 +36,7 @@ const PinChat = () => {
     useEffect(() => {
 
         ws.onopen = (e) => {
+            console.log(`open socket on id: ${id}`)
             const msg = {
                 type: 'SEND_USERS',
                 data: {
@@ -51,6 +54,9 @@ const PinChat = () => {
         ws.onerror = (e) => {
             console.error(e);
         };
+        ws.onclose = (e) => {
+            console.log(`closed socket on id: ${id}`)
+        }
 
         webSocket.current = {
             ws,
@@ -61,12 +67,13 @@ const PinChat = () => {
                 webSocket.current.ws.close();
             }
         };
-    }, [webSocket]);
+    }, [id]);
 
     return (
         <div>
-            {!messages ? null : messages.map(msg => msg.pinId === id ? <Message username={msg.username} key={count++} text={msg.messageText} /> : null)}
-            <form onSubmit={handleClick}>
+            <h1>{props.location.title}</h1>
+            {!messages ? null : messages.map((msg, i) => msg.pinId === id ? <Message username={msg.username} key={i} text={msg.messageText} /> : null)}
+            <form onSubmit={handleSubmit}>
                 <input type="text" placeholder={'yell'} value={inputValue} onChange={updateInput}></input>
                 <button type="submit">Send</button>
             </form>
