@@ -27,22 +27,32 @@ const Pin = () => {
     }, [dispatch, geoLoc])
 
     return (
-        <main className='main_page'>
-            <div>
-                <LogoutButton />
-                <NavLink to={'/newpin'}>Add Pin!</NavLink>
-                {!pins ? null : pins.map(pin => (
-                    <NavLink key={pin.id} to={{ pathname: `/pins/${pin.id}`, title: `${pin.title}` }}>
-                        <h1>{pin.title}</h1>
-                    </NavLink>
-                ))}
+        <main>
+            <div className="navbar">
+                <div className="navbar-menu">
+                    <div className="navbar-end">
+                        <NavLink className="navbar-item" to={'/newpin'}>Add Pin!</NavLink>
+                        <LogoutButton />
+                    </div>
+                </div>
             </div>
-            <div>
-                {!geoLoc || !pins ? null : <MapContainer pins={pins} currentPin={currentPin} lat={geoLoc.lat} lng={geoLoc.lng} />}
-            </div>
-            <div>
-                <Route path='/pins/:id' render={props => <PinChat {...props} />} />
-                <Route path='/newpin' render={props => <PinForm {...props} />} />
+            <Route path='/newpin' render={props => <PinForm {...props} />} />
+            <div className="">
+                <div className="main_page columns">
+                    <div className="column has-text-centered is-centered is-one-fifth">
+                        <div className="openchat_container box">
+                            {!pins ? null : pins.map(pin => (
+                                <NavLink className="box" key={pin.id} to={{ pathname: `/pins/${pin.id}`, title: `${pin.title}` }}>
+                                    <h1>{pin.title}</h1>
+                                </NavLink>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="column box is-three-fifths">
+                        {!geoLoc || !pins ? null : <MapContainer pins={pins} currentPin={currentPin} lat={geoLoc.lat} lng={geoLoc.lng} />}
+                    </div>
+                    <Route path='/pins/:id' render={props => <PinChat {...props} />} />
+                </div>
             </div>
         </main>
 

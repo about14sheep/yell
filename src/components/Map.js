@@ -1,9 +1,9 @@
 import React from 'react';
-import { baseUrl } from '../config'
 
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
 import L from 'leaflet'
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom'
 import iconImage from '../chat_icon.png'
 
 const MapContainer = props => {
@@ -12,9 +12,9 @@ const MapContainer = props => {
     const icon = new L.Icon({
         iconUrl: iconImage,
         iconRetinaUrl: iconImage,
-        iconAnchor: [5, 55],
-        popupAnchor: [10, -44],
-        iconSize: [55, 55],
+        iconAnchor: [5, 65],
+        popupAnchor: [27, 0],
+        iconSize: [65, 65],
         shadowSize: [68, 95],
         shadowAnchor: [20, 92],
     })
@@ -28,8 +28,8 @@ const MapContainer = props => {
             {pins.map(pin => (
                 <Marker key={pin.id} icon={icon} position={pin.geoLoc.coordinates}>
                     <Popup>
-                        <h1>{pin.title}</h1>
-                        {users.filter(user => user.pinId === pin.id).map(inst => inst.users.map(el => <p key={el}>{el}</p>))}
+                        <Link className="hero-title" to={{ pathname: `/pins/${pin.id}`, title: `${pin.title}` }} >{pin.title}</Link>
+                        {users.filter(user => user.pinId === pin.id).map(inst => inst.users.map(el => <p className="box" key={el}>{el}</p>))}
                     </Popup>
                 </Marker>
             ))}

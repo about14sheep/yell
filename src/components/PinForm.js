@@ -31,11 +31,14 @@ const PinForm = () => {
     }
 
     return (
-        <div>
-            <form onSubmit={dropPin}>
-                <input type="text" value={inputValue} placeholder={'got words?'} onChange={updateValue} />
-                <button type="submit">yell</button>
-            </form>
+        <div className="modal">
+            <div className="modal-content">
+                <form onSubmit={dropPin}>
+                    <input type="text" value={inputValue} placeholder={'got words?'} onChange={updateValue} />
+                    <button type="submit">yell</button>
+                </form>
+            </div>
+            <button className="modal-close is-large" aria-label="close"></button>
         </div>
     )
 }

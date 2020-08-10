@@ -13,9 +13,7 @@ const LogoutButton = () => {
     }
 
     return (
-        <div>
-            <button onClick={handleClick}>Logout</button>
-        </div>
+        <a className="navbar-item" onClick={handleClick}>Logout</a>
     )
 }
 

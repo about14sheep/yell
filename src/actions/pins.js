@@ -69,6 +69,8 @@ export const getPinChat = id => async (dispatch, getState) => {
     const res = await fetch(`${baseUrl}/pins/${id}`)
     if (res.ok) {
         const pin = await res.json()
-        dispatch(setCurrent(pin))
+        if (pin) {
+            dispatch(setCurrent(pin))
+        }
     }
 }

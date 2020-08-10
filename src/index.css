@@ -1,9 +1,19 @@
-.leaflet-container {
-    width: 70vw;
-    height: 100vh;   
-}
-
 .main_page {
     display: flex;
+    height: 90vh;
+    margin: 0px;
+}
 
+.navbar {
+    background-color: #a33dea;
+    margin-bottom: 25px;
+}
+
+.leaflet-container {
+    height: 100%;   
+}
+
+.chat_container {
+    display: flex;
+    flex-direction: column-reverse;
 }
