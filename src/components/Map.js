@@ -29,7 +29,7 @@ const MapContainer = props => {
                 <Marker key={pin.id} icon={icon} position={pin.geoLoc.coordinates}>
                     <Popup>
                         <Link className="hero-title" to={{ pathname: `/pins/${pin.id}`, title: `${pin.title}` }} >{pin.title}</Link>
-                        {users.filter(user => user.pinId === pin.id).map(inst => inst.users.map(el => <p className="box" key={el}>{el}</p>))}
+                        {users.filter(user => user.pinId === pin.id).map(inst => inst.users.map(el => <p key={el}>{el}</p>))}
                     </Popup>
                 </Marker>
             ))}

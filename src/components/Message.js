@@ -5,7 +5,7 @@ const Message = (props) => {
 
     return (
         <div>
-            <p>{`${text} : ${username}`}</p>
+            <p><span style={{ fontWeight: 'bold', color: '#A33DEA' }}>{`@${username}`}</span>{` ${text}`}</p>
         </div>
     )
 }

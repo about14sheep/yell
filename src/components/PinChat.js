@@ -72,13 +72,13 @@ const PinChat = (props) => {
     return (
         <div className="column is-one-fifth">
             <div className="box">
-                <p className="">
-                    {props.location.title}
-                </p>
                 <div className="">
-                    <div>
-                        {!messages ? null : messages.map((msg, i) => msg.pinId === id ? <Message username={msg.username} key={i} text={msg.messageText} /> : null)}
-                    </div>
+                    <h1>{props.location.title}:</h1>
+                </div>
+                <div>
+                    {!messages ? null : messages.map((msg, i) => msg.pinId === id ? <Message username={msg.username} key={i} text={msg.messageText} /> : null)}
+                </div>
+                <div className="">
                     <form onSubmit={handleSubmit}>
                         <input type="text" placeholder={'yell'} value={inputValue} onChange={updateInput}></input>
                         <button type="submit">Send</button>
